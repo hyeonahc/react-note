@@ -1,0 +1,188 @@
+12. Immer 를 사용한 더 쉬운 불변성 관리
+
+리액트에서 객체나 배열을 업데이트 해야할때
+1. 직접 수정 X
+2. 불변성을 지켜주면서 업데이트 O (기존 배열이나 객체의 복사본을 수정)
+
+객체
+1. 객체를 직접 수정하는 경우 -> 에러 발생
+const object = {
+  a: 1,
+  b: 2
+};
+
+object.b = 3;
+
+2. 기존 객체의 복사본을 만들어 수정 -> ...(spread operator) 연산자를 사용
+const object = {
+  a: 1,
+  b: 2
+};
+
+const nextObject = {
+  ...object,
+  b: 3
+}
+
+* Spread Operator의 동작 원리
+1) 복사하고 싶은 객체를 ...를 사용해 넣어준다
+   새객체에서 덮어씌워주고 싶은 값이 있으면 함께 넣어준다
+const nextObject = { // 새 객체
+  ...object, // 기존 객체 프로퍼티, 메서드 복사
+  b: 3 // 새 프로퍼티
+}
+
+2) object 안에 있는 프로퍼티들이 넣어진다
+   단 새객체에 같은 key값이 있는 프로퍼티는 덮어씌어진다
+const nextObject = { // 새 객체
+  a: 1, // 기존 프로퍼티
+  b: 2, // 덮어씌워진다
+  b: 3, // 새 프로퍼티
+}
+
+3. 최종적으로 nextObject 값은 다음과 같다
+const nextObject = {
+  a: 1,
+  b: 3
+}
+
+배열
+기존 코드를 변화시키는 배열의 메소드를 사용할 수 없다
+기존 코드를 변화시키는 배열의 메소드: push, splice
+기존 코드를 변화시키지 않는 배열의 메소드: concat(추가), filter(삭제), map(수정) 
+
+const todos = [
+  {
+    id: 1,
+    text: '할 일 #1',
+    done: true
+  },
+  {
+    id: 2,
+    text: '할 일 #2',
+    done: false
+  }
+];
+
+1) concat을 사용하여 새로운 객체를 추가하여 새 변수에 넣어준다 (기존 배열 todos는 변하지 않는다)
+const inserted = todos.concat({
+  id: 3,
+  text: '할 일 #3',
+  done: false
+});
+
+// inserted
+[
+  {
+    id: 1,
+    text: '할 일 #1',
+    done: true
+  },
+  {
+    id: 2,
+    text: '할 일 #2',
+    done: false
+  },
+  {
+    id: 3,
+    text: '할 일 #3',
+    done: false
+  }
+]
+
+2) filter를 사용하여 todos 배열에 각각의 객체 todo의 id값이 2인 객체를 빼준 배열을 리턴한다 (기존 배열 todos는 변하지 않는다)
+const filtered = todos.filter(todo => todo.id !== 2);
+
+// filtered
+[
+  {
+    id: 1,
+    text: '할 일 #1',
+    done: true
+  }
+]
+
+3) map을 사용하여 todos 배열에 있는 각각의 객체 todo의 id값이 2인 경우에 ? 아래의 코드를 2가 아닌 경우에는 : 아래의 코드를 넣어준다
+id가 2인 경우에
+-> done의 value값을 기존 done의 반댓값으로 준다
+id가 2가 아닌 경우에
+-> 같은 객체 리턴
+const toggled = todos.map(
+  todo => todo.id === 2
+    ? {
+      ...todo,
+      done: !todo.done,
+    }
+    : todo
+);
+
+// toggled
+const todos = [
+  {
+    id: 1,
+    text: '할 일 #1',
+    done: true
+  },
+  {
+    id: 2,
+    text: '할 일 #2',
+    done: true
+  }
+];
+
+데이터의 구조가 조금 까다로워지면 불변성을 지켜가면서 새로운 데이터를 생성해내는 코드가 조금 복잡해집니다 -> immer 라이브러리 등장
+const state = {
+  posts: [
+    {
+      id: 1,
+      title: '제목입니다.',
+      body: '내용입니다.',
+      comments: [
+        {
+          id: 1,
+          text: '와 정말 잘 읽었습니다.'
+        }
+        {
+          * 새로운 댓글 추가 *
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: '제목입니다.',
+      body: '내용입니다.',
+      comments: [
+        {
+          id: 2,
+          text: '또 다른 댓글 어쩌고 저쩌고'
+        }
+      ]
+    }
+  ],
+  selectedId: 1
+};
+
+posts 배열 안의 id 가 1 인 post 객체를 찾아서, comments 에 새로운 댓글 객체를 추가
+const nextState = {
+  ...state,
+  posts: state.posts.map(post =>
+    post.id === 1
+      ? {
+          ...post,
+          comments: post.comments.concat({
+            id: 3,
+            text: '새로운 댓글'
+          })
+        }
+      : post
+  )
+};
+
+immer 라는 라이브러리를 사용했을때
+const nextState = produce(state, draft => {
+  const post = draft.posts.find(post => post.id === 1);
+  post.comments.push({
+    id: 3,
+    text: '와 정말 쉽다!'
+  });
+});
