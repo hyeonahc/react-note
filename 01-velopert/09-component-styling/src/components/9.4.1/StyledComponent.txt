@@ -1,0 +1,39 @@
+9.4.1 Tagged 템플릿 리터럴
+일반 템플릿 리터럴 vs Tagged 템플릿 리터럴
+-> Tagged 템플릿 리터럴은 자바스크립트 객체나 함수를 전달할 때 온전히 추출 할 수 있다
+
+콘솔창에서 실행해보기
+1. 일반 템플릿 리터럴
+`hello ${{ foo: 'bar' }} ${() => 'world'}!`;
+
+콘솔창 결과
+"hello [object Object] () => 'world'!"
+템플릿에 객체를 넣거나 함수를 넣으면 형태를 잃어 버리게 된다
+객체는 [object, Object], 함수는 함수내용이 그대로 문자열화되어 나타남
+
+2. Tagged 템플릿 리터럴 
+tagged 함수 뒤에 템플릿 리터럴을 넣어준다
+rest parameters
+: Rest 파라미터는 Spread 연산자(...)를 사용하여 함수의 파라미터를 작성한 형태를 말한다. 즉, Rest 파라미터를 사용하면 함수의 파라미터로 오는 값들을 "배열"로 전달받을 수 있다.
+function tagged(...args) { // rest parameters
+  console.log(args);
+}
+tagged`hello ${{ foo: 'bar' }} ${() => 'world'}!`;
+
+콘솔창 결과
+(3) [Array(3), {…}, ƒ]
+0: (3) ['hello ', ' ', '!', raw: Array(3)]
+1: {foo: 'bar'}
+2: () => 'world'
+length: 3
+[[Prototype]]: Array(0)
+
+=> tagged 템플릿 리터럴을 사용하면 이렇게 템플릿 사이사이에 들어가는 자바스크립트 객체나 함수의 원본값을 그대로 추출할 수 있다
+=> styled-components는 이러한 속성을 사용하여 styled-components로 만든 컴포넌트의 props를 스타일 쪽에서 쉽게 조회할 수 있도록 해준다
+const Box = styled.div`
+  background: ${props => props.color || 'blue'};
+  padding: 1rem;
+  display: flex;
+`;
+styled.div
+styled라는 함수에 미리 정의 해둔 HTML태그 div를 추가
