@@ -1,0 +1,46 @@
+일반 HTML에서 DOM 요소에 이름을 달 때는 id를 사용
+예) <div id="root"></div>
+
+특정 DOM 요소에 어떤 작업을 해야 할 때 id를 붙여서:
+- CSS에서 id를 달아 스타일 적용
+- JS에서 해당 id 요소를 찾아 작업
+
+일반 HTML에서 DOM 요소에 이름을 달 때는 id를 사용
+리액트에서 DOM 요소에 이름을 달 때는 ref를 사용
+
+리액트 컴포넌트 안에서 id를 사용하면 안되는 이유
+- 같은 컴포넌트가 재사용 되는 경우 id가 한번만 사용되는 것이 아닌 여러번 사용된다 
+- ref는 전역적으로 작동하지 않고 컴포넌트 내부에서만 작동하기 때문에 이런문제가 발생하지 않는다
+- 컴포넌트를 만들 때마다 id 뒷부분에 추가 텍스트를 붙여 button-1, button-2 중복 id가 발생하는 것을 방지
+
+명칭 정리
+<ValidationSample name="조현아" />
+name: props
+"조현아": props value
+HTML에서 attribute 부분이 props다
+
+클래스 컴포넌트에서 props 접근하기
+{this.props.name}
+
+클래스 안에는 1. 프로퍼티(멤버변수) 2. 메서드가 있다
+멤버변수: class 내부에 선언되어 있는 변수
+
+다른 언어에서 클래스 사용법
+: 메소드에서 사용되어지고 있는 lastName, firstName이 사전에 선언이 되어있어야한다
+class MyClass {
+	String lastName;
+	String firstName;
+
+	printFullName() {
+		print(this.lastName + this.firstName)
+	}
+}
+
+자바스크립트에서 클래스 사용법
+: 메소드에서 사용되어지고 있는 변수를 메소드에서 사용하면서 바로 선언할 수 있다
+class MyClass {
+	printFullName() {
+		print(this.lastName + this.firstName)
+		// => this.lastName과 this.firstName이라는 멤버변수가 클래스에 생성되었다
+	}
+}
