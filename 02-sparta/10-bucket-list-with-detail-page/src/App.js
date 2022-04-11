@@ -1,8 +1,9 @@
 import React from 'react';
-import BucketList from './BucketList';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import BucketList from './BucketList';
 import Detail from './Detail';
+import NotFound from './NotFound';
 
 function App() {
   const [list, setList] = React.useState([
@@ -20,12 +21,17 @@ function App() {
       <Container>
         <Title>내 버킷리스트</Title>
         <Line />
-        <Route path={'/'} exact>
-          <BucketList list={list} />
-        </Route>
-        <Route path={'/detail'}>
-          <Detail />
-        </Route>
+        <Switch>
+          <Route path={'/'} exact>
+            <BucketList list={list} />
+          </Route>
+          <Route path={'/detail'}>
+            <Detail />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
       </Container>
       <Input>
         <input type="text" ref={text} />
