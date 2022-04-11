@@ -15,8 +15,6 @@ function App() {
   const text = React.useRef(null);
 
   const addBucketList = () => {
-    // 스프레드 문법! 기억하고 계신가요? :)
-    // 원본 배열 list에 새로운 요소를 추가해주었습니다.
     setList([...list, text.current.value]);
   };
   return (
@@ -24,9 +22,6 @@ function App() {
       <Container>
         <Title>내 버킷리스트</Title>
         <Line />
-        {/* 컴포넌트를 넣어줍니다. */}
-        {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
-        {/* <Route path={'/'} component={BucketList} list={list} /> */}
         <Route path={'/'} exact>
           <BucketList list={list} />
         </Route>
@@ -34,7 +29,6 @@ function App() {
           <Detail />
         </Route>
       </Container>
-      {/* 인풋박스와 추가하기 버튼을 넣어줬어요. */}
       <Input>
         <input type="text" ref={text} />
         <button onClick={addBucketList}>추가하기</button>
