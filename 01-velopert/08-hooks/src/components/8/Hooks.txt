@@ -7,8 +7,8 @@ useState
 const [value, setValue] = useState(initial value)
 
 value: 상태값
-setValue: 상태를 설정하는 함수
-useState(): 함수 안에는 상태의 기본값
+setValue: 해당하는 value의 상태를 업데이트하는 함수
+useState(): 함수 안에는 value 상태의 초기값이 들어간다
 
 useState 함수가 호출되면 배열 반환
 첫번째 원소: 상태 값
