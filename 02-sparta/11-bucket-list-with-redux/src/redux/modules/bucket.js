@@ -1,7 +1,7 @@
 // bucket module
 
 // Initial State
-// 리덕스에서 저장하고 있는 초기 상태(=데이터)
+// 리덕스에서 저장하고 있는 초기 상태(데이터)
 const initialState = {
   list: ['영화관 가기', '매일 책읽기', '수영 배우기'],
 };
@@ -22,9 +22,6 @@ export function createBucket(bucket) {
 // reducer 함수가 호출될때 action이 들어오지 않을경우 디폴트 파라미터로 설정된 빈객체가 들어간다
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case 'bucket/LOAD':
-      return state;
-
     case 'bucket/CREATE': {
       console.log('state 업데이트하기');
       const new_bucket_list = [...state.list, action.bucket];

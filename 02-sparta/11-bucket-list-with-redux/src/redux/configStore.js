@@ -1,7 +1,7 @@
 // bucket module을 가지고 만든 Store
 
 import { createStore, combineReducers } from 'redux';
-// createStore: Store 생성
+// createStore: store를 생성하는 함수
 // combineReducer: 여러개의 리듀서를 묶어주는 함수
 import bucket from './modules/bucket';
 // 리듀서 import하기
@@ -12,6 +12,7 @@ import bucket from './modules/bucket';
 // 예) combineReducers({ bucket, newReducer... });
 const rootReducer = combineReducers({ bucket });
 // const rootReducer = combineReducers({ bucket: bucket });
+// const rootReducer = combineReducers({ bucket: { list: new_bucket_list }; });
 
 // Store
 // 전역 데이터를 저장하는 곳

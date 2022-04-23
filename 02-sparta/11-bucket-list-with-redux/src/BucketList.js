@@ -18,6 +18,7 @@ const BucketList = props => {
   // configStore.js에서 선언한 const rootReducer = combineReducers({ bucket }) Object bucket이 리턴된다
 
   const my_lists = useSelector(state => state.bucket.list);
+  // const my_lists = useSelector();
   console.log(my_lists);
 
   const history = useHistory();
