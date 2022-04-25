@@ -8,12 +8,19 @@ const initialState = {
 
 // Action Type
 const CREATE = 'bucket/CREATE';
+const DELETE = 'bucket/DELETE';
 
 // Action Creators
 // 액션 생성 함수로 액션을 만들기 위해 사용하는 함수
 export function createBucket(bucket) {
-  console.log('액션생성함수 실행! state 업데이트 요청!');
+  console.log('액션생성함수 실행! state 추가 요청!');
   return { type: CREATE, bucket: bucket };
+}
+
+export function deleteBucket(bucket_index) {
+  console.log('액션생성함수 실행! state 삭제 요청!');
+  console.log('bucket_index: ', bucket_index);
+  return { type: DELETE, bucket_index: bucket_index };
 }
 
 // Reducer
@@ -25,6 +32,20 @@ export default function reducer(state = initialState, action = {}) {
     case 'bucket/CREATE': {
       console.log('state 업데이트하기');
       const new_bucket_list = [...state.list, action.bucket];
+      return { list: new_bucket_list };
+    }
+    case 'bucket/DELETE': {
+      console.log('state 삭제하기');
+      console.log('state: ', state, 'action: ', action);
+      const new_bucket_list = state.list.filter((l, i) => {
+        // true일때 남고 false일때 뺌
+        console.log(
+          action.bucket_index,
+          i,
+          parseInt(action.bucket_index) !== i
+        );
+        return parseInt(action.bucket_index) !== i;
+      });
       return { list: new_bucket_list };
     }
 
