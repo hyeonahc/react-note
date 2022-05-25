@@ -20,6 +20,12 @@ const Navbar = () => {
       <NavLink style={navLinkStyles} to="/products">
         Products
       </NavLink>
+      <NavLink style={navLinkStyles} to="/users">
+        Users
+      </NavLink>
+      <NavLink style={navLinkStyles} to="/guests">
+        Guests
+      </NavLink>
     </nav>
   );
 };
