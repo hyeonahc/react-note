@@ -1,0 +1,44 @@
+.button {
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: green;
+  border-radius: 10px;
+  color: white;
+  margin: 10px;
+  width: 60px;
+  height: 30px;
+  font-size: 16px;
+}
+
+.large {
+  width: 140px;
+  height: 70px;
+  font-size: 24px;
+}
+
+.medium {
+  width: 120px;
+  height: 60px;
+  font-size: 20px;
+}
+
+.small {
+  width: 100px;
+  height: 50px;
+  font-size: 16px;
+}
+
+.tomato {
+  background-color: tomato;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.skyblue {
+  background-color: skyblue;
+}
